@@ -1,22 +1,33 @@
-// The following ifdef block is the standard way of creating macros which make exporting 
-// from a DLL simpler. All files within this DLL are compiled with the MATHCADREMMBR_EXPORTS
-// symbol defined on the command line. This symbol should not be defined on any project
-// that uses this DLL. This way any other project whose source files include this file see 
-// MATHCADREMMBR_API functions as being imported from a DLL, whereas this DLL sees symbols
-// defined with this macro as being exported.
+#include "MCADINCL.H"
+
 #ifdef MATHCADREMMBR_EXPORTS
 #define MATHCADREMMBR_API __declspec(dllexport)
 #else
 #define MATHCADREMMBR_API __declspec(dllimport)
 #endif
 
-// This class is exported from the MathcadRemmbr.dll
-class MATHCADREMMBR_API CMathcadRemmbr {
-public:
-	CMathcadRemmbr(void);
-	// TODO: add your methods here.
-};
+#define  INTERRUPTED            1
+#define  INSUFFICIENT_MEMORY    2
+#define  INVALID_HANDLE         3
+#define  NUMBER_OF_ERRORS       3
 
-extern MATHCADREMMBR_API int nMathcadRemmbr;
+#pragma region Function definitions
 
-MATHCADREMMBR_API int fnMathcadRemmbr(void);
+LRESULT CreateRecall( COMPLEXSCALAR* const RecallHandle,
+	const COMPLEXSCALAR* const Size );
+LRESULT ForgetRecall( COMPLEXSCALAR* const DummyResult, 
+	const COMPLEXSCALAR* const RecallHandle );
+LRESULT CloneRecall( COMPLEXSCALAR* const RecallHandle,
+	const COMPLEXSCALAR* const RecallSource );
+LRESULT Remember( COMPLEXSCALAR* const DummyResult, 
+	const COMPLEXSCALAR* const RecallHandle, const COMPLEXARRAY* const Data );
+LRESULT GetRecall( COMPLEXARRAY* const Data,
+	const COMPLEXSCALAR* const RecallHandle );
+LRESULT ForgetAll( COMPLEXSCALAR* const DummyResult,
+	const COMPLEXSCALAR* const DummyParam);
+
+#pragma endregion
+
+void init_remmbr();
+
+void close_remmbr();
